@@ -1,0 +1,43 @@
+{% extends 'schemas_structure/base.html' %}
+
+{% block content %}
+
+        <div class="container">
+<h2 style="margin-top: 25px">Data schemas</h2>
+<a href="{% url 'SchemaCreateView' %}">
+    <button type="button" class="btn btn-success" style="margin-top: 25px">New schema</button>
+</a>
+
+<table class="table" style="margin-top:25px">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Modified</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for schema in object_list %}
+    <tr>
+        <th scope="row" >{{schema.id}}</th>
+        <td><a href="{% url 'DataSetView' schema.id %}"><button type="button" class="btn btn-link">{{schema.name }}</button></a></td>
+        <td>{{ schema.updated_at }}</td>
+        <td>
+            <a href="{% url 'SchemaUpdateView' schema.id %}"><button type="button" class="btn btn-link">Edit scheme</button></a>
+            <a href="{% url 'SchemaDeleteView' schema.id %}">
+                <button type="button" class="btn btn-link text-danger">Delete</button>
+            </a>
+        </td>
+    </tr>
+    {% empty %}
+       <p style="margin-top: 25px">No schemas yet.</p>
+    {% endfor %}
+  </tbody>
+</table>
+        </div>
+
+{% endblock %}
+
+
+

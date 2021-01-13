@@ -1,0 +1,54 @@
+{% extends 'schemas_structure/base.html' %}
+
+{% block content %}
+
+    <div class="container" style="margin-top:25px">
+<h1>Data sets</h1>
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Generate data</button>
+</form>
+{% if not object_list %}
+    <p>No datasets yet.</p>
+{%else%}
+    <table class="table" style="margin-top:25px">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Created</th>
+          <th scope="col">Status</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for dataset in object_list %}
+        <tr>
+            <th scope="row">{{dataset.id}}</th>
+            <td>{{ dataset.created_at }}</td>
+            <td>
+                <button type="button" class="btn
+                 {% if dataset.status == 'Ready' %}
+                    btn-success
+                 {%else%}
+                    btn-secondary
+                 {%endif%}">{{ dataset.status }}</button>
+
+            </td>
+
+            <td>
+                <a href="{{ MEDIA_URL }}schema_{{dataset.schema_id}}dataset_{{dataset.id}}.csv">
+                    <button type="button" class="btn btn-link">Download</button></a>
+            </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+{% endif %}
+
+
+
+{% endblock %}
+
+
+

@@ -1,0 +1,34 @@
+{% extends 'schemas_structure/base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block script%}
+
+<script src = "{% static 'schemaform.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class = "container">
+    <h1 style="margin-top: 25px">Schema</h1>
+    <form method="post">
+    {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <h2 style="margin-top: 25px">Schema columns</h2>
+         {{ columns.management_form }}
+       <div id = 'form_set'>
+           {% for column in columns %}
+                <div class="form-inline">
+                    {% bootstrap_form column show_label=0 field_class='p-1 ' %}
+                </div>
+           {% endfor %}
+      </div>
+    <div id = "empty_form" class="d-none">
+        <div class="form-inline">
+            {% bootstrap_form columns.empty_form show_label=0 field_class='p-1 ' %}
+        </div>
+    </div>
+        <button type="button" class="btn btn-primary" id=add_column style="margin-top: 25px">Add column</button>
+    </form>
+    </div>
+{% endblock %}
